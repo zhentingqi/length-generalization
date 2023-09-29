@@ -1,5 +1,7 @@
 #!/bin/bash
 
+mkdir experiments
+
 set -e
 
 
@@ -7,7 +9,7 @@ set -e
 PE=pe_abs_sin # Select from pe_none, pe_t5, pe_alibi, pe_rotary, pe_abs_sin
 DS=scan # See data/ for available datasets
 export APP_DS_SPLIT=mdlen_tr25_ts48 # Check data/$DS for available splits
-export WANDB_ENTITY="<YOUR_WANDB_ENTITY>"
+export WANDB_ENTITY="zhentingqi"
 #-------------------- EDIT THIS PART --------------------#
 
 
@@ -48,7 +50,7 @@ for SEED in $SEEDS; do
   export WANDB_JOB_TYPE=attn_analysis_aggr
   export WANDB_RUN_ID="${RUN_ID_PREFIX}_agg_${SEED}"
   export WANDB_TAGS=attention_aggr_analysis,$WANDB_TAGS
-  
+
   python src/main.py --configs $CONFIGS_STR,configs/attn_aggr_analysis.jsonnet \
     analyze_all --split test
 done
